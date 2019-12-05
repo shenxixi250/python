@@ -250,3 +250,246 @@ del tuple1
 | min(tuple) | 返回元组中元素最小值 |
 | tuple(seq) | 将列表转换为元组     |
 
+字典
+相当于java中的map
+name={‘nihao’：hello ，‘nanren’：man， ‘shenxixi’：handsome}  
+简单描述就是 键值对用：  每对之间的， 最后{}
+
+要注意键必须唯一 值不必唯一
+
+
+访问字典
+print（name【‘nihao’】）
+hello
+如果字典中没有这个键会报错
+
+修改字典
+
+新增 
+namei【‘shenxixi’】=‘zhuanye’
+修改
+name【‘nihao’】= ‘hi’
+
+删除
+del 【‘nihao’】 删除单个键值
+del name 删除整个字典表
+
+
+
+set 集合
+
+
+
+
+函数
+def sum（num1，num2）：
+“两数之和”
+	if not（isinstance （num1，（int，float）） and isinstance（num2，（int，float）））：
+		raise TypeError（‘参数有错误’）
+	return num1+num2 ，num1-num2
+num3 ，num4 = division（9，4）# 注意这种特别的赋值方式是很方便的
+tuple1 = division（9，4）#这个要注意python中一次能接受多个返回值的类型一定就是元组  
+
+
+
+函数的参数
+
+1. 主要的参数类型有  : 默认参数 ,关键之参数(位置的参数) 
+默认参数  就是在构造函数的时候给参数赋值就可以了 
+
+```
+# -*- coding: UTF-8 -*-
+
+def print_user_info( name , age , sex = '男' ):
+    # 打印用户信息
+    print('昵称：{}'.format(name) , end = ' ')
+    print('年龄：{}'.format(age) , end = ' ')
+    print('性别：{}'.format(sex))
+    return;
+
+# 调用 print_user_info 函数
+
+print_user_info( '两点水' , 18 , '女')
+print_user_info( '三点水' , 25 )
+```
+
+```
+
+```
+
+
+但是这里需要注意的一点是：只有在形参表末尾的那些参数可以有默认参数值，也就是说你不能在声明函数形参的时候，先声明有默认值的形参而后声明没有默认值的形参。
+
+这是因为赋给形参的值是根据位置而赋值的。例如，def func(a, b=1) 是有效的，但是 def func(a=1, b) 是 无效 的。
+
+还有一种情况  就是如果 我们的参数是一个list 或者dict 南无我们使用什么来作为默认值呢
+我们可以只用None来作为我们 的默认值 
+```
+# 如果 b 是一个 list ，可以使用 None 作为默认值
+def print_info( a , b = None ):
+    if b is None :
+        b=[]
+    return;
+```
+
+
+
+认真看下例子，会不会有这样的疑问呢？在参数中我们直接 b=[] 不就行了吗？
+
+也就是写成下面这个样子：
+```
+def print_info( a , b = [] ):
+    return;
+```
+
+对不对呢？
+
+运行一下也没发现错误啊，可以这样写吗？
+
+这里需要特别注意的一点：默认参数的值是不可变的对象，比如None、True、False、数字或字符串，如果你像上面的那样操作，当默认值在其他地方被修改后你将会遇到各种麻烦。
+
+这些修改会影响到下次调用这个函数时的默认值。
+
+示例如下：
+```
+# -*- coding: UTF-8 -*-
+
+def print_info( a , b = [] ):
+    print(b)
+    return b ;
+
+result = print_info(1)
+
+result.append('error')
+
+print_info(2)
+```
+输出的结果：
+```
+[]
+['error']
+```
+
+还有一种使用
+```
+_no_value =object()
+
+def print_info( a , b = _no_value ):
+    if b is _no_value :
+        print('b 没有赋值')
+    return;
+```
+
+
+## 关键字参数位置 
+
+就是我们传参数的时候就告诉这个变量是我们准备传给那个变量的
+
+
+```
+
+def print_user_info( name ,  age  , sex = '男' ):
+    # 打印用户信息
+    print('昵称：{}'.format(name) , end = ' ')
+    print('年龄：{}'.format(age) , end = ' ')
+    print('性别：{}'.format(sex))
+    return;
+
+
+
+# 调用 print_user_info 函数
+
+print_user_info( name = '两点水' ,age = 18 , sex = '女')
+print_user_info( name = '两点水' ,sex = '女', age = 18 )
+```
+
+这样就很方便了
+
+
+还有一种就是不定长的参数
+
+```
+# -*- coding: UTF-8 -*-
+
+def print_user_info( name ,  age  , sex = '男' , * hobby):
+    # 打印用户信息
+    print('昵称：{}'.format(name) , end = ' ')
+    print('年龄：{}'.format(age) , end = ' ')
+    print('性别：{}'.format(sex) ,end = ' ' )
+    print('爱好：{}'.format(hobby))
+    return;
+
+# 调用 print_user_info 函数
+print_user_info( '两点水' ,18 , '女', '打篮球','打羽毛球','跑步')
+```
+其实在参数面前加上星号的意思就是 这个是一个空元组   我们也可以不向函数传递没有命名的变量
+
+
+但是如果我们想向没有 可变长的变量中输入字典我们又该怎么做呢
+```
+# -*- coding: UTF-8 -*-
+
+def print_user_info( name ,  age  , sex = '男' , ** hobby ):
+    # 打印用户信息
+    print('昵称：{}'.format(name) , end = ' ')
+    print('年龄：{}'.format(age) , end = ' ')
+    print('性别：{}'.format(sex) ,end = ' ' )
+    print('爱好：{}'.format(hobby))
+    return;
+
+# 调用 print_user_info 函数
+print_user_info( name = '两点水' , age = 18 , sex = '女', hobby = ('打篮球','打羽毛球','跑步'))
+
+昵称：两点水 年龄：18 性别：女 爱好：{'hobby': ('打篮球', '打羽毛球', '跑步')}	
+```
+
+### 只接受关键字参数
+
+关键字参数使用起来简单，不容易参数出错，那么有些时候，我们定义的函数希望某些参数强制使用关键字参数传递，这时候该怎么办呢？
+```
+将强制关键字参数放到某个*参数或者单个*后面就能达到这种效果,比如：
+
+# -*- coding: UTF-8 -*-
+
+def print_user_info( name , *, age  , sex = '男' ):
+    # 打印用户信息
+    print('昵称：{}'.format(name) , end = ' ')
+    print('年龄：{}'.format(age) , end = ' ')
+    print('性别：{}'.format(sex))
+    return;
+
+# 调用 print_user_info 函数
+print_user_info( name = '两点水' ,age = 18 , sex = '女' )
+
+# 这种写法会报错，因为 age ，sex 这两个参数强制使用关键字参数
+#print_user_info( '两点水' , 18 , '女' )
+print_user_info('两点水',age='22',sex='男')
+
+通过例子可以看，如果 age , sex 不使用关键字参数是会报错的。
+
+很多情况下，使用强制关键字参数会比使用位置参数表意更加清晰，程序也更加具有可读性。使用强制关键字参数也会比使用 **kw 参数更好且强制关键字参数在一些更高级场合同样也很有用。
+```
+
+
+### 函数传值的问题
+```
+def change_number(b):
+	b=122
+b=1
+change_number(b)
+print(b)
+```
+输出结果是1 
+
+这里主要是函数参数的传递中，传递的是类型对象，之前也介绍了 Python 中基本的数据类型等。而这些类型对象可以分为可更改类型和不可更改的类型
+
+在 Python 中，字符串，整形，浮点型，tuple 是不可更改的对象，而 list ， dict 等是可以更改的对象。
+
+例如：
+
+不可更改的类型：变量赋值 a = 1，其实就是生成一个整形对象 1 ，然后变量 a 指向 1，当 a = 1000 其实就是再生成一个整形对象 1000，然后改变 a 的指向，不再指向整形对象 1 ，而是指向 1000，最后 1 会被丢弃
+
+可更改的类型：变量赋值 a = [1,2,3,4,5,6] ，就是生成一个对象 list ，list 里面有 6 个元素，而变量 a 指向 list ，a[2] = 5则是将 list a 的第三个元素值更改,这里跟上面是不同的，并不是将 a 重新指向，而是直接修改 list 中的元素值。
+
+
+<++>

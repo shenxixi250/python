@@ -1,4 +1,3 @@
-
 name = [1,'2',3,'34']
 print(name[0:2])
 print(name[:2])
